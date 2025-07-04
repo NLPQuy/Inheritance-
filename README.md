@@ -151,10 +151,10 @@ mallard.introduce();
 - Giảm thiểu code duplication
 
 ### Nhược điểm
-- **Diamond Problem**: Khi cả hai lớp cha đều kế thừa từ cùng một lớp tổ tiên
-- Phức tạp trong việc debug và maintain
-- **Ambiguity**: Khi các lớp cha có method cùng tên
-- Tăng complexity và coupling
+- **Diamond Problem**: Khi hai lớp cha cùng kế thừa từ một lớp tổ tiên, rồi lớp con lại kế thừa cả hai lớp cha → có thể gây rối khi lớp tổ tiên bị gọi nhiều lần.
+- Việc sửa lỗi hoặc nâng cấp chương trình sẽ khó hơn vì cấu trúc kế thừa phức tạp.
+- **Ambiguity**: Nếu hai lớp cha có phương thức cùng tên, chương trình không biết dùng cái nào → dễ xảy ra lỗi.
+- Khi các lớp liên kết chặt chẽ với nhau, việc thay đổi một lớp có thể ảnh hưởng đến nhiều lớp khác.
 - Không được hỗ trợ trong một số ngôn ngữ (như Java, C#)
 
 ---
