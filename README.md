@@ -256,11 +256,11 @@ ferrari.race();
 - Tổ chức code có logic và dễ hiểu
 
 ### Nhược điểm
-- Tạo ra coupling chặt chẽ giữa các lớp
-- Thay đổi lớp cha ảnh hưởng đến tất cả lớp con
-- Có thể tạo ra hierarchy quá sâu, khó quản lý
-- Khó maintain khi chuỗi quá dài
-- Violate nguyên tắc "Favor composition over inheritance"
+- **Tạo sự phụ thuộc chặt giữa các lớp:** Các lớp cha và con liên kết chặt với nhau → thay đổi ở lớp cha có thể gây lỗi cho lớp con.
+- **Khó thay đổi linh hoạt:** Nếu sửa lớp cha, tất cả lớp con đều bị ảnh hưởng → dễ gây lỗi không mong muốn.
+- **Cấu trúc kế thừa dễ bị quá sâu:** Nhiều lớp kế thừa nối tiếp nhau → chương trình khó hiểu, khó quản lý.
+- **Khó bảo trì khi chuỗi kế thừa quá dài:** Việc theo dõi và sửa lỗi trở nên phức tạp nếu lớp con nằm sâu trong hệ thống kế thừa.
+- **Không tuân theo nguyên tắc "ưu tiên kết hợp hơn kế thừa" (Favor composition over inheritance):** Sử dụng kế thừa quá mức có thể làm mã cứng nhắc, khó mở rộng → nên ưu tiên dùng composition (ghép đối tượng) khi phù hợp.
 
 ---
 
@@ -393,18 +393,18 @@ void drawShapes() {
 - Các loại tài khoản ngân hàng: Account → SavingsAccount, CheckingAccount, CreditAccount
 
 ### Ưu điểm
-- Code reuse hiệu quả từ lớp cha chung
-- Dễ thêm các lớp con mới mà không ảnh hưởng đến code hiện tại
-- Polymorphism được áp dụng tốt
-- Tách biệt rõ ràng các functionality khác nhau
-- Dễ maintain và extend
-- Tuân theo Open/Closed Principle
+- **Tái sử dụng code hiệu quả:** Các lớp con có thể dùng lại logic và thuộc tính từ lớp cha, không cần viết lại.
+- **Dễ mở rộng hệ thống:** Có thể thêm lớp con mới mà không cần sửa code cũ → giảm nguy cơ lỗi.
+- **Hỗ trợ tính đa hình (Polymorphism):** Giúp viết code linh hoạt, dễ mở rộng với các đối tượng khác nhau cùng một interface.
+- **Phân chia rõ ràng chức năng:** Mỗi lớp có nhiệm vụ riêng → hệ thống rõ ràng và dễ hiểu hơn.
+- **Dễ bảo trì và nâng cấp:** Nếu tổ chức tốt, việc cập nhật hoặc mở rộng chương trình trở nên thuận tiện.
+- **Tuân thủ nguyên tắc Open/Closed:** Cho phép mở rộng hệ thống mà không cần thay đổi mã nguồn đã có.
 
 ### Nhược điểm
-- Lớp cha có thể trở nên quá phức tạp khi phải phục vụ nhiều lớp con
-- Thay đổi lớp cha ảnh hưởng đến tất cả lớp con
-- Có thể dẫn đến "God Class" anti-pattern
-- Interface của lớp cha có thể không phù hợp với tất cả lớp con
+- **Lớp cha dễ bị phức tạp hóa:** Khi phải hỗ trợ nhiều lớp con khác nhau, lớp cha có thể trở nên rối và khó quản lý.
+- **Thay đổi ở lớp cha có thể gây lỗi hàng loạt:** Mọi thay đổi trong lớp cha sẽ ảnh hưởng đến tất cả lớp con kế thừa nó.
+- **Dễ dẫn đến "God Class" (lớp thần thánh):** Một lớp chứa quá nhiều chức năng → vi phạm nguyên tắc thiết kế tốt.
+- **Interface lớp cha không phù hợp cho mọi lớp con:** Không phải lớp con nào cũng cần toàn bộ chức năng lớp cha cung cấp → gây dư thừa hoặc phức tạp không cần thiết.
 
 ---
 
@@ -571,13 +571,13 @@ void demonstrateHybridInheritance() {
 - Tái sử dụng code tối đa từ nhiều nguồn
 
 ### Nhược điểm
-- **Diamond Problem nghiêm trọng**: Khi có multiple paths đến cùng một base class
+- **Diamond Problem nghiêm trọng**: Khi một lớp kế thừa từ hai lớp cha cùng kế thừa từ một lớp tổ tiên → chương trình không biết nên dùng phần nào từ lớp tổ tiên.
 - **Cực kỳ phức tạp**: Khó hiểu, khó thiết kế đúng
-- **Ambiguity nghiêm trọng**: Compiler không biết chọn method nào
-- **Performance overhead cao**: Do phải resolve multiple inheritance
-- **Debugging nightmare**: Rất khó trace lỗi
-- **High coupling**: Các class phụ thuộc lẫn nhau phức tạp
-- **Maintenance hell**: Thay đổi một chỗ có thể ảnh hưởng không lường trước
+- **Dễ gây nhầm lẫn do trùng phương thức:**: Nếu các lớp cha có phương thức cùng tên, trình biên dịch không biết nên gọi cái nào.
+- **Giảm hiệu năng:**: Hệ thống phải tốn công giải quyết các xung đột trong đa kế thừa → có thể ảnh hưởng đến hiệu suất.
+- **Khó debug:**: Khi xảy ra lỗi, rất khó lần theo để biết lỗi đến từ đâu.
+- **Các lớp phụ thuộc chằng chịt:**: Các class phụ thuộc lẫn nhau phức tạp
+- **Khó bảo trì**: Thay đổi một chỗ có thể ảnh hưởng không lường trước
 
 ---
 
